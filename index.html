@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Хурмап тест 2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0514;
+            color: #e0d4f5;
+            line-height: 1.5;
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::before {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.5), transparent 70%);
+            top: -150px;
+            left: -150px;
+            animation: float1 15s ease-in-out infinite;
+        }
+
+        body::after {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.35), transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation: float2 18s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, 80px) scale(1.1); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-100px, -60px) scale(1.15); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 900px;
+            height: 100%;
+            max-height: 100dvh;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 22px 26px;
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.7),
+                0 0 80px rgba(168, 85, 247, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            border-radius: 50%;
+        }
+
+        .progress-bar-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 28px 28px 0 0;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #a855f7, #ec4899, #a855f7);
+            background-size: 200% 100%;
+            border-radius: 28px 0 0 0;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: shimmer 3s linear infinite;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 14px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, #c084fc 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5));
+            flex-shrink: 0;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-shrink: 0;
+            gap: 10px;
+        }
+
+        .progress {
+            font-size: 12px;
+            color: #c084fc;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .progress::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #a855f7;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #a855f7;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px 14px;
+            background: rgba(168, 85, 247, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            border-radius: 12px;
+            box-shadow: 
+                0 0 20px rgba(168, 85, 247, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            gap: 8px;
+        }
+
+        .timer-icon {
+            width: 16px;
+            height: 16px;
+            stroke: #c084fc;
+            stroke-width: 2.5;
+            fill: none;
+            filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.6));
+        }
+
+        .timer-value {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+            letter-spacing: 0.5px;
+        }
+
+        .timer-value.warning {
+            color: #ff4d4d;
+            animation: pulse-warn 1s infinite;
+            text-shadow: 0 0 18px rgba(255, 77, 77, 0.9);
+        }
+
+        @keyframes pulse-warn {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        #quizArea {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            gap: 12px;
+            animation: questionFade 0.4s ease-out;
+        }
+
+        @keyframes questionFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .image-container {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            flex: 0 1 auto;
+            min-height: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            max-height: 40%;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), transparent 50%, rgba(236, 72, 153, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            width: auto;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #fff;
+            padding: 4px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.25);
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: left;
+            padding-left: 14px;
+            border-left: 3px solid transparent;
+            border-image: linear-gradient(180deg, #a855f7, #ec4899) 1;
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+            flex-shrink: 0;
+            letter-spacing: 0.3px;
+        }
+
+        .options {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
+            padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(168, 85, 247, 0.5) transparent;
+        }
+
+        .options::-webkit-scrollbar {
+            width: 6px;
+        }
+        .options::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 3px;
+        }
+        .options::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a855f7, #ec4899);
+            border-radius: 3px;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            color: #d8c8f0;
+            user-select: none;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .options label::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .options label:hover::before {
+            left: 100%;
+        }
+
+        .options label:hover {
+            background: rgba(168, 85, 247, 0.12);
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateX(4px);
+            box-shadow: 
+                0 5px 25px rgba(168, 85, 247, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+
+        .options label:active {
+            transform: scale(0.98);
+        }
+
+        .options label:has(input[type="radio"]:checked) {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.15));
+            border-color: rgba(168, 85, 247, 0.7);
+            color: #ffffff;
+            box-shadow: 
+                0 0 25px rgba(168, 85, 247, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .options input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(168, 85, 247, 0.6);
+            border-radius: 50%;
+            margin-right: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .options input[type="radio"]:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+        }
+
+        .options input[type="radio"]:checked {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-color: transparent;
+            box-shadow: 
+                0 0 18px rgba(168, 85, 247, 0.8),
+                0 0 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .options input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            animation: checkPop 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes checkPop {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            70% { transform: translate(-50%, -50%) scale(1.3); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .button-area {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #ec4899 100%);
+            background-size: 200% 200%;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 
+                0 8px 25px rgba(124, 58, 237, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        button:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        button:hover:not(:disabled) {
+            background-position: 100% 0;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 35px rgba(124, 58, 237, 0.65),
+                0 0 40px rgba(236, 72, 153, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0) scale(0.98);
+        }
+
+        button:disabled {
+            background: rgba(74, 58, 106, 0.4);
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.5;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .feedback {
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            line-height: 1.4;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feedback::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            border-radius: 12px 0 0 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback.correct {
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            box-shadow: 
+                0 0 25px rgba(34, 197, 94, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .feedback.correct::before {
+            background: #4ade80;
+            box-shadow: 0 0 12px #4ade80;
+        }
+
+        .feedback.incorrect {
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            box-shadow: 
+                0 0 25px rgba(239, 68, 68, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .feedback.incorrect::before {
+            background: #f87171;
+            box-shadow: 0 0 12px #f87171;
+        }
+
+        .feedback .correct-answer {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #d8c8f0;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Финальный экран --- */
+        #finalResult {
+            text-align: center;
+            padding: 10px 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+            gap: 16px;
+            min-height: 0;
+        }
+
+        #finalResult h2 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #ffffff, #c084fc, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.6));
+            animation: fadeIn 0.6s ease;
+            flex-shrink: 0;
+        }
+
+        /* --- Круговой прогресс с процентом --- */
+        .score-circle {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.8s ease;
+            flex-shrink: 0;
+        }
+
+        .score-circle svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.4));
+        }
+
+        .score-circle .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.08);
+            stroke-width: 10;
+        }
+
+        .score-circle .circle-fill {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke: url(#gradient);
+            transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-circle .percent-text {
+            font-size: 42px;
+            font-weight: 800;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .score-circle .percent-symbol {
+            font-size: 24px;
+            font-weight: 700;
+            color: #c084fc;
+            margin-left: 2px;
+        }
+
+        .score-circle .percent-wrapper {
+            display: flex;
+            align-items: flex-start;
+            z-index: 2;
+        }
+
+        #finalScore {
+            font-size: 18px;
+            color: #d8c8f0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            animation: fadeIn 1s ease;
+            flex-shrink: 0;
+        }
+
+        #finalScore strong {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        #finalResult button {
+            width: 100%;
+            max-width: 480px;
+            min-width: 300px;
+            padding: 18px 40px;
+            font-size: 18px;
+            border-radius: 16px;
+            margin-top: 5px;
+            animation: fadeIn 1.2s ease;
+            flex-shrink: 0;
+        }
+
+        /* ========================================= */
+        /* АДАПТИВНОСТЬ                              */
+        /* ========================================= */
+
+        @media (min-width: 1200px) {
+            .container { padding: 30px 40px; }
+            h1 { font-size: 24px; }
+            .question-text { font-size: 19px; }
+            .options label { font-size: 15px; padding: 14px 20px; }
+        }
+
+        @media (max-width: 1024px) {
+            .container { padding: 20px 22px; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 8px; }
+            .container { padding: 16px; border-radius: 22px; }
+            h1 { font-size: 16px; margin-bottom: 10px; letter-spacing: 1px; }
+            .top-bar { margin-bottom: 10px; }
+            .progress { font-size: 11px; }
+            .timer-container { padding: 5px 12px; }
+            .timer-value { font-size: 15px; }
+            .timer-icon { width: 14px; height: 14px; }
+            .image-container { max-height: 35%; padding: 8px; }
+            .question-text { font-size: 15px; }
+            .options label { padding: 10px 14px; font-size: 13px; border-radius: 10px; }
+            .options input[type="radio"] { width: 18px; height: 18px; margin-right: 10px; }
+            button { padding: 12px; font-size: 14px; border-radius: 12px; }
+            .feedback { font-size: 13px; padding: 8px 10px; }
+            .feedback .correct-answer { font-size: 11px; }
+
+            #finalResult h2 { font-size: 24px; }
+            .score-circle { width: 140px; height: 140px; }
+            .score-circle .percent-text { font-size: 34px; }
+            .score-circle .percent-symbol { font-size: 20px; }
+            #finalScore { font-size: 15px; }
+            #finalScore strong { font-size: 17px; }
+            #finalResult button {
+                min-width: 0;
+                max-width: 100%;
+                padding: 14px 30px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 12px; }
+            h1 { font-size: 14px; }
+            .question-text { font-size: 14px; padding-left: 10px; }
+            .options label { padding: 9px 12px; font-size: 12px; }
+            .image-container { max-height: 30%; padding: 6px; }
+            button { padding: 10px; font-size: 13px; }
+
+            #finalResult h2 { font-size: 20px; }
+            .score-circle { width: 120px; height: 120px; }
+            .score-circle .percent-text { font-size: 28px; }
+            .score-circle .percent-symbol { font-size: 16px; }
+            #finalScore { font-size: 14px; }
+            #finalScore strong { font-size: 16px; }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            body { padding: 6px; }
+            .container { padding: 10px 15px; border-radius: 16px; }
+            h1 { font-size: 14px; margin-bottom: 6px; }
+            .top-bar { margin-bottom: 6px; }
+            
+            #quizArea {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto 1fr auto;
+                gap: 8px 15px;
+            }
+            .image-container {
+                grid-row: 1 / 3;
+                grid-column: 1;
+                max-height: 100%;
+                height: 100%;
+            }
+            .question-text {
+                grid-column: 2;
+                grid-row: 1;
+                font-size: 13px;
+            }
+            .options {
+                grid-column: 2;
+                grid-row: 2 / 4;
+                gap: 5px;
+            }
+            .options label { padding: 7px 12px; font-size: 11px; }
+            .options input[type="radio"] { width: 15px; height: 15px; margin-right: 8px; }
+            .button-area {
+                grid-column: 1 / 3;
+                grid-row: 4;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+            }
+            button { padding: 9px; font-size: 12px; }
+            .feedback { 
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80%;
+                font-size: 11px;
+                padding: 6px;
+            }
+
+            /* Финальный экран в ландшафте */
+            #finalResult {
+                flex-direction: row;
+                gap: 25px;
+                padding: 5px;
+            }
+            #finalResult h2 { font-size: 18px; }
+            .score-circle { width: 100px; height: 100px; }
+            .score-circle .percent-text { font-size: 24px; }
+            .score-circle .percent-symbol { font-size: 14px; }
+            #finalScore { font-size: 12px; }
+            #finalResult button { 
+                padding: 10px 20px; 
+                font-size: 12px; 
+                min-width: 150px;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <h1>Тест: Логические уровни</h1>
+
+    <div class="top-bar">
+        <div class="progress" id="progress">Вопрос 1 из 12</div>
+        <div class="timer-container">
+            <svg class="timer-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span class="timer-value" id="timerDisplay">10:00</span>
+        </div>
+    </div>
+
+    <div id="quizArea">
+        <div class="image-container">
+            <img src="" alt="Электрическая схема" id="schematic">
+        </div>
+
+        <div class="question-text" id="questionText"></div>
+
+        <div class="options" id="optionsContainer"></div>
+
+        <div class="button-area">
+            <div class="feedback" id="feedback"></div>
+            <button id="submitBtn" onclick="submitAnswer()">Ответить</button>
+            <button id="nextBtn" class="hidden" onclick="nextQuestion()">Следующий вопрос</button>
+        </div>
+    </div>
+
+    <div id="finalResult" class="hidden">
+        <h2>Тест завершен!</h2>
+        
+        <!-- Круговой прогресс с процентом -->
+        <div class="score-circle">
+            <svg viewBox="0 0 120 120">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#a855f7" />
+                        <stop offset="50%" stop-color="#ec4899" />
+                        <stop offset="100%" stop-color="#a855f7" />
+                    </linearGradient>
+                </defs>
+                <circle class="circle-bg" cx="60" cy="60" r="52"></circle>
+                <circle class="circle-fill" id="circleFill" cx="60" cy="60" r="52" 
+                        stroke-dasharray="326.7" stroke-dashoffset="326.7"></circle>
+            </svg>
+            <div class="percent-wrapper">
+                <span class="percent-text" id="percentText">0</span>
+                <span class="percent-symbol">%</span>
+            </div>
+        </div>
+
+        <p id="finalScore"></p>
+        <button onclick="restartQuiz()">Пройти заново</button>
+    </div>
+</div>
+
+<script>
+    const images = {
+        img1: "schematic1.png",
+        img2: "schematic2.png",
+        img3: "schematic3.png"
+    };
+
+    const questionsData = [
+        { id: "q1", imageId: "img1", text: "Прямая фаза", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "1" },
+        { id: "q2", imageId: "img1", text: "Обратная фаза", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "0" },
+        { id: "q3", imageId: "img1", text: "+-5В", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "0" },
+        { id: "q4", imageId: "img1", text: "0В", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "half" },
+        
+        { id: "q5", imageId: "img2", text: "Прямая фаза", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "0" },
+        { id: "q6", imageId: "img2", text: "Обратная фаза", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "1" },
+        { id: "q7", imageId: "img2", text: "+-5В", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "0" },
+        { id: "q8", imageId: "img2", text: "0В", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "half" },
+
+        { id: "q9", imageId: "img3", text: "Прямая фаза", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "1" },
+        { id: "q10", imageId: "img3", text: "Обратная фаза", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "0" },
+        { id: "q11", imageId: "img3", text: "+-5В", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "0" },
+        { id: "q12", imageId: "img3", text: "0В", options: [
+            { text: "логическая единица", value: "1" },
+            { text: "логический ноль", value: "0" },
+            { text: "половина от логической единицы", value: "half" }
+        ], correct: "half" }
+    ];
+
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let timerInterval = null;
+    let timeLeft = 600;
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 600;
+        updateTimerDisplay();
+
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                endQuizByTime();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        const display = document.getElementById('timerDisplay');
+        display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+        if (timeLeft <= 60) {
+            display.classList.add('warning');
+        } else {
+            display.classList.remove('warning');
+        }
+    }
+
+    function updateProgressBar() {
+        const percent = ((currentIndex) / currentQuestions.length) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+    }
+
+    // Функция обновления кругового прогресса и процента
+    function updateScoreCircle(percent) {
+        const circle = document.getElementById('circleFill');
+        const percentText = document.getElementById('percentText');
+        const circumference = 326.7; // 2 * π * 52
+
+        // Устанавливаем цвет градиента в зависимости от процента
+        const gradient = document.querySelector('#gradient');
+        if (percent >= 80) {
+            gradient.children[0].setAttribute('stop-color', '#4ade80');
+            gradient.children[1].setAttribute('stop-color', '#22c55e');
+            gradient.children[2].setAttribute('stop-color', '#4ade80');
+        } else if (percent >= 50) {
+            gradient.children[0].setAttribute('stop-color', '#fbbf24');
+            gradient.children[1].setAttribute('stop-color', '#f59e0b');
+            gradient.children[2].setAttribute('stop-color', '#fbbf24');
+        } else {
+            gradient.children[0].setAttribute('stop-color', '#f87171');
+            gradient.children[1].setAttribute('stop-color', '#ef4444');
+            gradient.children[2].setAttribute('stop-color', '#f87171');
+        }
+
+        // Анимируем заполнение круга
+        setTimeout(() => {
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+        }, 100);
+
+        // Анимируем число от 0 до percent
+        let current = 0;
+        const duration = 1200;
+        const startTime = performance.now();
+
+        function animateNumber(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Плавное замедление в конце
+            const eased = 1 - Math.pow(1 - progress, 3);
+            current = Math.round(eased * percent);
+            percentText.textContent = current;
+
+            if (progress < 1) {
+                requestAnimationFrame(animateNumber);
+            }
+        }
+        requestAnimationFrame(animateNumber);
+    }
+
+    function endQuizByTime() {
+        document.getElementById('quizArea').classList.add('hidden');
+        document.getElementById('finalResult').classList.remove('hidden');
+        document.getElementById('progress').style.display = 'none';
+        document.getElementById('timerDisplay').textContent = "00:00";
+        document.getElementById('progressBar').style.width = '100%';
+
+        const total = currentQuestions.length;
+        const percent = Math.round((score / total) * 100);
+        const finalScoreEl = document.getElementById('finalScore');
+        
+        finalScoreEl.innerHTML = `Время вышло! Правильно: <strong>${score}</strong> из <strong>${total}</strong>`;
+        finalScoreEl.style.color = "#f87171";
+        
+        updateScoreCircle(percent);
+    }
+
+    function initQuiz() {
+        currentQuestions = shuffleArray([...questionsData]);
+        
+        currentQuestions.forEach(q => {
+            q.options = shuffleArray([...q.options]);
+        });
+
+        currentIndex = 0;
+        score = 0;
+
+        document.getElementById('quizArea').classList.remove('hidden');
+        document.getElementById('finalResult').classList.add('hidden');
+        document.getElementById('progress').style.display = 'flex';
+        document.getElementById('progressBar').style.width = '0%';
+
+        // Сброс кругового прогресса
+        const circle = document.getElementById('circleFill');
+        circle.style.strokeDashoffset = 326.7;
+        document.getElementById('percentText').textContent = '0';
+
+        startTimer();
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = currentQuestions[currentIndex];
+        
+        document.getElementById('progress').textContent = `Вопрос ${currentIndex + 1} из ${currentQuestions.length}`;
+        updateProgressBar();
+        
+        const imgElement = document.getElementById('schematic');
+        imgElement.src = images[q.imageId];
+        
+        document.getElementById('questionText').textContent = `${currentIndex + 1}. ${q.text}`;
+        
+        const optionsContainer = document.getElementById('optionsContainer');
+        optionsContainer.innerHTML = '';
+        
+        q.options.forEach(opt => {
+            const label = document.createElement('label');
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'currentQuestion';
+            radio.value = opt.value;
+            
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(opt.text));
+            optionsContainer.appendChild(label);
+        });
+
+        document.getElementById('submitBtn').classList.remove('hidden');
+        document.getElementById('submitBtn').disabled = false;
+        document.getElementById('nextBtn').classList.add('hidden');
+        
+        const feedback = document.getElementById('feedback');
+        feedback.style.display = 'none';
+        feedback.className = 'feedback';
+    }
+
+    function submitAnswer() {
+        const selectedRadio = document.querySelector('input[name="currentQuestion"]:checked');
+        
+        if (!selectedRadio) {
+            alert("Пожалуйста, выберите вариант ответа!");
+            return;
+        }
+
+        const userAnswer = selectedRadio.value;
+        const currentQ = currentQuestions[currentIndex];
+        const correctAnswerValue = currentQ.correct;
+        
+        const correctOption = currentQ.options.find(opt => opt.value === correctAnswerValue);
+        const correctAnswerText = correctOption ? correctOption.text : "Неизвестно";
+
+        const feedback = document.getElementById('feedback');
+
+        document.getElementById('submitBtn').disabled = true;
+
+        if (userAnswer === correctAnswerValue) {
+            score++;
+            feedback.innerHTML = "✓ Верно!";
+            feedback.className = 'feedback correct';
+        } else {
+            feedback.innerHTML = `✗ Неверно.<span class="correct-answer">Правильный ответ: ${correctAnswerText}</span>`;
+            feedback.className = 'feedback incorrect';
+        }
+        feedback.style.display = 'block';
+
+        const nextBtn = document.getElementById('nextBtn');
+        if (currentIndex < currentQuestions.length - 1) {
+            nextBtn.textContent = "Следующий →";
+        } else {
+            nextBtn.textContent = "Показать результат";
+        }
+        nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        currentIndex++;
+        
+        if (currentIndex < currentQuestions.length) {
+            loadQuestion();
+        } else {
+            showFinalResult();
+        }
+    }
+
+    function showFinalResult() {
+        clearInterval(timerInterval);
+        
+        document.getElementById('quizArea').classList.add('hidden');
+        document.getElementById('finalResult').classList.remove('hidden');
+        document.getElementById('progress').style.display = 'none';
+        document.getElementById('progressBar').style.width = '100%';
+        
+        const total = currentQuestions.length;
+        const percent = Math.round((score / total) * 100);
+        const finalScoreEl = document.getElementById('finalScore');
+        
+        finalScoreEl.innerHTML = `Правильно: <strong>${score}</strong> из <strong>${total}</strong>`;
+        
+        if (score === total) {
+            finalScoreEl.style.color = "#4ade80";
+        } else if (percent >= 50) {
+            finalScoreEl.style.color = "#fbbf24";
+        } else {
+            finalScoreEl.style.color = "#f87171";
+        }
+        
+        updateScoreCircle(percent);
+    }
+
+    function restartQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('timerDisplay').textContent = "10:00";
+        document.getElementById('timerDisplay').classList.remove('warning');
+        initQuiz();
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
