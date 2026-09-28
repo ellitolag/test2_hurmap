@@ -595,7 +595,6 @@
             flex-shrink: 0;
         }
 
-        /* --- Круговой прогресс с процентом --- */
         .score-circle {
             position: relative;
             width: 180px;
@@ -696,6 +695,7 @@
             .container { padding: 20px 22px; }
         }
 
+        /* ============ ПЛАНШЕТЫ И ТЕЛЕФОНЫ ============ */
         @media (max-width: 768px) {
             body { padding: 8px; }
             .container { padding: 16px; border-radius: 22px; }
@@ -705,13 +705,39 @@
             .timer-container { padding: 5px 12px; }
             .timer-value { font-size: 15px; }
             .timer-icon { width: 14px; height: 14px; }
-            .image-container { max-height: 35%; padding: 8px; }
+            .image-container { max-height: 32%; padding: 8px; }
             .question-text { font-size: 15px; }
-            .options label { padding: 10px 14px; font-size: 13px; border-radius: 10px; }
-            .options input[type="radio"] { width: 18px; height: 18px; margin-right: 10px; }
-            button { padding: 12px; font-size: 14px; border-radius: 12px; }
-            .feedback { font-size: 13px; padding: 8px 10px; }
-            .feedback .correct-answer { font-size: 11px; }
+            
+            /* ==== ШИРОКИЕ ВАРИАНТЫ ОТВЕТОВ ДЛЯ ТЕЛЕФОНА ==== */
+            .options { 
+                gap: 10px;
+                padding-right: 2px;
+            }
+            .options label { 
+                padding: 16px 18px;   /* Увеличенная зона нажатия */
+                font-size: 15px;      /* Крупнее текст */
+                border-radius: 12px;
+                min-height: 56px;     /* Минимальная высота касания */
+            }
+            .options input[type="radio"] { 
+                width: 22px;          /* Больше радио-кнопка */
+                height: 22px; 
+                margin-right: 14px; 
+                border-width: 2.5px;
+            }
+            
+            /* ==== ШИРОКАЯ КНОПКА ДЛЯ ТЕЛЕФОНА ==== */
+            .button-area { gap: 10px; }
+            button { 
+                padding: 18px 16px;   /* Высокая кнопка */
+                font-size: 16px;      /* Крупный текст */
+                border-radius: 14px;
+                min-height: 56px;     /* Минимальная высота касания */
+                letter-spacing: 1px;
+            }
+            
+            .feedback { font-size: 14px; padding: 12px 14px; }
+            .feedback .correct-answer { font-size: 13px; }
 
             #finalResult h2 { font-size: 24px; }
             .score-circle { width: 140px; height: 140px; }
@@ -722,18 +748,39 @@
             #finalResult button {
                 min-width: 0;
                 max-width: 100%;
-                padding: 14px 30px;
-                font-size: 15px;
+                padding: 18px 30px;
+                font-size: 16px;
             }
         }
 
+        /* ============ МАЛЕНЬКИЕ ТЕЛЕФОНЫ ============ */
         @media (max-width: 480px) {
             .container { padding: 12px; }
             h1 { font-size: 14px; }
             .question-text { font-size: 14px; padding-left: 10px; }
-            .options label { padding: 9px 12px; font-size: 12px; }
-            .image-container { max-height: 30%; padding: 6px; }
-            button { padding: 10px; font-size: 13px; }
+            .image-container { max-height: 28%; padding: 6px; }
+            
+            /* Варианты ответов остаются широкими */
+            .options { gap: 9px; }
+            .options label { 
+                padding: 15px 16px;
+                font-size: 14px;
+                border-radius: 11px;
+                min-height: 54px;
+            }
+            .options input[type="radio"] { 
+                width: 22px;
+                height: 22px;
+                margin-right: 12px;
+            }
+            
+            /* Кнопка остаётся широкой */
+            button { 
+                padding: 17px 14px;
+                font-size: 15px;
+                border-radius: 12px;
+                min-height: 54px;
+            }
 
             #finalResult h2 { font-size: 20px; }
             .score-circle { width: 120px; height: 120px; }
@@ -741,8 +788,14 @@
             .score-circle .percent-symbol { font-size: 16px; }
             #finalScore { font-size: 14px; }
             #finalScore strong { font-size: 16px; }
+            #finalResult button {
+                padding: 16px 24px;
+                font-size: 15px;
+                min-height: 54px;
+            }
         }
 
+        /* ============ ЛАНДШАФТНАЯ ОРИЕНТАЦИЯ НА ТЕЛЕФОНЕ ============ */
         @media (max-height: 500px) and (orientation: landscape) {
             body { padding: 6px; }
             .container { padding: 10px 15px; border-radius: 16px; }
@@ -769,10 +822,18 @@
             .options {
                 grid-column: 2;
                 grid-row: 2 / 4;
-                gap: 5px;
+                gap: 8px;
             }
-            .options label { padding: 7px 12px; font-size: 11px; }
-            .options input[type="radio"] { width: 15px; height: 15px; margin-right: 8px; }
+            .options label { 
+                padding: 10px 14px; 
+                font-size: 12px;
+                min-height: 44px;
+            }
+            .options input[type="radio"] { 
+                width: 18px; 
+                height: 18px; 
+                margin-right: 10px; 
+            }
             .button-area {
                 grid-column: 1 / 3;
                 grid-row: 4;
@@ -780,7 +841,11 @@
                 flex-direction: row;
                 gap: 10px;
             }
-            button { padding: 9px; font-size: 12px; }
+            button { 
+                padding: 12px; 
+                font-size: 13px;
+                min-height: 48px;
+            }
             .feedback { 
                 position: absolute;
                 bottom: 10px;
@@ -791,7 +856,6 @@
                 padding: 6px;
             }
 
-            /* Финальный экран в ландшафте */
             #finalResult {
                 flex-direction: row;
                 gap: 25px;
@@ -803,10 +867,11 @@
             .score-circle .percent-symbol { font-size: 14px; }
             #finalScore { font-size: 12px; }
             #finalResult button { 
-                padding: 10px 20px; 
-                font-size: 12px; 
-                min-width: 150px;
+                padding: 12px 24px; 
+                font-size: 13px; 
+                min-width: 180px;
                 width: auto;
+                min-height: 48px;
             }
         }
     </style>
@@ -818,7 +883,6 @@
         <div class="progress-bar-fill" id="progressBar"></div>
     </div>
 
-    <h1>Тест: Логические уровни</h1>
 
     <div class="top-bar">
         <div class="progress" id="progress">Вопрос 1 из 12</div>
@@ -850,7 +914,6 @@
     <div id="finalResult" class="hidden">
         <h2>Тест завершен!</h2>
         
-        <!-- Круговой прогресс с процентом -->
         <div class="score-circle">
             <svg viewBox="0 0 120 120">
                 <defs>
@@ -995,13 +1058,11 @@
         document.getElementById('progressBar').style.width = percent + '%';
     }
 
-    // Функция обновления кругового прогресса и процента
     function updateScoreCircle(percent) {
         const circle = document.getElementById('circleFill');
         const percentText = document.getElementById('percentText');
-        const circumference = 326.7; // 2 * π * 52
+        const circumference = 326.7;
 
-        // Устанавливаем цвет градиента в зависимости от процента
         const gradient = document.querySelector('#gradient');
         if (percent >= 80) {
             gradient.children[0].setAttribute('stop-color', '#4ade80');
@@ -1017,13 +1078,11 @@
             gradient.children[2].setAttribute('stop-color', '#f87171');
         }
 
-        // Анимируем заполнение круга
         setTimeout(() => {
             const offset = circumference - (percent / 100) * circumference;
             circle.style.strokeDashoffset = offset;
         }, 100);
 
-        // Анимируем число от 0 до percent
         let current = 0;
         const duration = 1200;
         const startTime = performance.now();
@@ -1031,7 +1090,6 @@
         function animateNumber(now) {
             const elapsed = now - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            // Плавное замедление в конце
             const eased = 1 - Math.pow(1 - progress, 3);
             current = Math.round(eased * percent);
             percentText.textContent = current;
@@ -1075,7 +1133,6 @@
         document.getElementById('progress').style.display = 'flex';
         document.getElementById('progressBar').style.width = '0%';
 
-        // Сброс кругового прогресса
         const circle = document.getElementById('circleFill');
         circle.style.strokeDashoffset = 326.7;
         document.getElementById('percentText').textContent = '0';
